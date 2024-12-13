@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Logo from "../assets/images/Logo.png";
-import FooterBg from "../assets/images/footer.jpg";
+import FooterBg from "../assets/images/footernew.png";
 
 const Footer = () => {
   // Framer Motion animations
@@ -10,14 +10,50 @@ const Footer = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+        staggerChildren: 0.2, // Add stagger effect for child elements
+      },
     },
   };
 
-  const linkVariants = {
-    hover: { scale: 1.1, color: "#4CAF50" },
-    tap: { scale: 0.95 },
+  const socialIconVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+    hover: {
+      scale: 1.2,
+      rotate: 360,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+      },
+    },
+    tap: { scale: 0.9 },
   };
+
+  // Social links with explicit icon rendering
+  const socialLinks = [
+    {
+      href: "https://www.facebook.com",
+      icon: "facebook-f",
+      color: "text-blue-600 hover:text-blue-800",
+    },
+    {
+      href: "https://twitter.com",
+      icon: "twitter",
+      color: "text-sky-500 hover:text-sky-700",
+    },
+    {
+      href: "https://www.instagram.com",
+      icon: "instagram",
+      color: "text-pink-600 hover:text-pink-800",
+    },
+  ];
 
   return (
     <motion.footer
@@ -51,47 +87,34 @@ const Footer = () => {
           <p className="text-gray-600">Email: contact@ceylonmystique.com</p>
         </div>
 
-        {/* Opening Hours Section with Social Links on the Right */}
-        <div className="flex justify-between items-start w-full ml-4">
-          <div className="flex flex-col items-start w-full sm:w-2/3">
+        {/* Opening Hours Section */}
+        <div className="flex flex-col items-start ml-4 w-full">
+          <div className="flex flex-col items-start w-full">
             <h3 className="text-2xl font-bold mb-4 text-gray-800">
               Opening Hours
             </h3>
             <p className="text-gray-600 mb-2">
               Monday to Saturday 8:00 am to 8:00 pm
             </p>
-            <p className="text-gray-600">Sundays 12:00 noon to 8:00 pm</p>
+            <p className="text-gray-600 mb-4">Sundays 12:00 noon to 8:00 pm</p>
           </div>
 
           {/* Social Links Section */}
-          <div className="flex justify-end space-x-4 mt-4 sm:w-1/3">
-            <motion.a
-              href="https://www.facebook.com/ceylonmystique"
-              className="text-gray-600 hover:text-blue-500"
-              variants={linkVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </motion.a>
-            <motion.a
-              href="https://twitter.com/ceylonmystique"
-              className="text-gray-600 hover:text-blue-500"
-              variants={linkVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <i className="fab fa-twitter"></i>
-            </motion.a>
-            <motion.a
-              href="https://www.instagram.com/ceylonmystique"
-              className="text-gray-600 hover:text-pink-500"
-              variants={linkVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <i className="fab fa-instagram"></i>
-            </motion.a>
+          <div className="flex space-x-6 justify-start items-center text-2xl">
+            {socialLinks.map((link, index) => (
+              <motion.a
+                key={index}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${link.color} transition-colors duration-300`}
+                variants={socialIconVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <i className={`fab fa-${link.icon}`}></i>
+              </motion.a>
+            ))}
           </div>
         </div>
       </div>
