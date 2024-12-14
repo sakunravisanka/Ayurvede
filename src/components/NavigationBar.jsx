@@ -2,29 +2,26 @@ import React, { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingCart } from "lucide-react"; // Import the ShoppingCart icon
-import logo from "../assets/images/Logo.png"; // Import your logo image
+import { Menu, X, ShoppingCart, Search } from "lucide-react";
+import logo from "../assets/images/Logo.png";
 
 const NavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const menuItems = [
-    { label: "Home", href: "/#home", route: "/", icon: null },
-    { label: "Product", href: "/products", route: "/products", icon: null }, // Removed icon
-    { label: "About", href: "/#about", route: "/", icon: null },
-    { label: "Service", href: "/#service", route: "/", icon: null },
-    { label: "Contact", href: "/#contact", route: "/", icon: null },
+    { label: "Home", href: "/#home", route: "/" },
+    { label: "Product", href: "/products", route: "/products" },
+    { label: "About", href: "/#about", route: "/" },
+    { label: "Service", href: "/#service", route: "/" },
+    { label: "Contact", href: "/#contact", route: "/" },
   ];
 
   const containerVariants = {
     hidden: {
       opacity: 0,
       y: -30,
-      transition: {
-        staggerChildren: 0.1,
-        type: "tween",
-      },
     },
     visible: {
       opacity: 1,
@@ -35,25 +32,6 @@ const NavigationBar = () => {
         type: "spring",
         stiffness: 120,
         damping: 15,
-      },
-    },
-  };
-
-  const menuVariants = {
-    hidden: {
-      opacity: 0,
-      x: "100%",
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-      },
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
       },
     },
   };
@@ -86,6 +64,32 @@ const NavigationBar = () => {
     },
   };
 
+  const mobileMenuVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut",
+      },
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      },
+    },
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Implement search functionality
+    console.log("Searching for:", searchQuery);
+  };
+
   return (
     <motion.nav
       initial="hidden"
@@ -93,25 +97,113 @@ const NavigationBar = () => {
       variants={containerVariants}
       className="fixed h-20 top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg shadow-md"
     >
-      <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center">
-        {/* Logo with Link to Home */}
+      <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center relative">
+        {/* Logo */}
         <Link to="/">
           <motion.div
             variants={linkVariants}
             className="flex items-center space-x-2"
           >
-            <img src={logo} alt="Logo" className="h-20" />
-            {/* Logo Image */}
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-16 filter brightness-90 contrast-125 saturate-150 hue-rotate-15"
+            />
           </motion.div>
         </Link>
 
-        {/* Desktop Product Action Button with Icon */}
+        {/* Desktop Navigation Centered */}
+        <div className="hidden lg:flex flex-grow justify-center items-center space-x-8">
+          {menuItems.map((item) => (
+            <HashLink
+              key={item.label}
+              to={item.href}
+              scroll={(el) => el.scrollIntoView({ behavior: "smooth" })}
+            >
+              <motion.div
+                variants={linkVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={() => setActiveLink(item.label)}
+                className={`flex items-center space-x-2 relative group ${
+                  activeLink === item.label
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-500"
+                }`}
+              >
+                <span className="font-medium transition-colors duration-300">
+                  {item.label}
+                </span>
+                {activeLink === item.label && (
+                  <motion.span
+                    layoutId="underline"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-600"
+                  />
+                )}
+              </motion.div>
+            </HashLink>
+          ))}
+        </div>
+
+        {/* Search Bar */}
+        <motion.form
+          variants={linkVariants}
+          onSubmit={handleSearch}
+          className="hidden lg:flex items-center relative mx-4"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          }}
+        >
+          <motion.div
+            className="relative flex items-center"
+            whileFocus={{
+              scale: 1.02,
+              transition: { duration: 0.2 },
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 py-2 w-64 bg-transparent focus:outline-none placeholder-gray-500 text-gray-700"
+            />
+            <motion.div
+              className="absolute left-2 text-gray-500"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Search size={20} />
+            </motion.div>
+            {/* Animated Underline */}
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 h-[1px] bg-green-500 origin-left"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+              }}
+            />
+          </motion.div>
+        </motion.form>
+
+        {/* Shop Cart Button - Right Corner */}
         <motion.button
           variants={linkVariants}
-          whileHover="hover"
-          className="hidden md:flex items-center mr-10 bg-primary text-white px-4 py-2 rounded-full space-x-2 hover:bg-green-800 transition justify-center mx-auto md:ml-0"
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          }}
+          whileTap={{ scale: 0.95 }}
+          className="hidden lg:flex items-center absolute right-4 top-1/2 -translate-y-1/2 bg-green-600 text-white px-4 py-2 rounded-full space-x-2 hover:bg-green-700 transition"
         >
-          <ShoppingCart size={20} /> {/* ShoppingCart Icon */}
+          <ShoppingCart size={20} />
           <span className="text-sm font-medium">Shop</span>
         </motion.button>
 
@@ -120,45 +212,10 @@ const NavigationBar = () => {
           variants={linkVariants}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-800"
+          className="lg:hidden text-gray-800"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </motion.button>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <div className="flex mr-4 space-x-6 items-center ml-auto">
-            {menuItems.map((item) => {
-              return (
-                <HashLink
-                  key={item.label}
-                  to={item.href}
-                  scroll={(el) => el.scrollIntoView({ behavior: "smooth" })}
-                >
-                  <motion.div
-                    variants={linkVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => setActiveLink(item.label)}
-                    className={`flex items-center space-x-2 relative group ${
-                      activeLink === item.label
-                        ? "text-primary"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    <span className="font-medium">{item.label}</span>
-                    {activeLink === item.label && (
-                      <motion.span
-                        layoutId="underline"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-highlight"
-                      />
-                    )}
-                  </motion.div>
-                </HashLink>
-              );
-            })}
-          </div>
-        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -168,43 +225,80 @@ const NavigationBar = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            variants={menuVariants}
-            className="md:hidden fixed top-16 right-0 w-64 bg-white shadow-2xl rounded-lg p-4"
+            variants={mobileMenuVariants}
+            className="lg:hidden fixed top-20 right-0 w-72 bg-white/95 backdrop-blur-lg shadow-2xl rounded-bl-2xl border-l border-b border-green-50"
           >
-            <motion.div variants={containerVariants} className="space-y-4">
-              {menuItems.map((item) => {
-                return (
-                  <HashLink
-                    key={item.label}
-                    to={item.href}
-                    scroll={(el) => el.scrollIntoView({ behavior: "smooth" })}
+            {/* Search Bar for Mobile */}
+            <motion.form
+              onSubmit={handleSearch}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 pb-0"
+            >
+              <motion.div
+                className="relative flex items-center bg-gray-100 rounded-full px-4 py-2"
+                whileFocus={{
+                  scale: 1.02,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <Search size={20} className="text-gray-500 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent focus:outline-none placeholder-gray-500 text-gray-700"
+                />
+              </motion.div>
+            </motion.form>
+
+            <motion.div variants={containerVariants} className="p-6 space-y-4">
+              {menuItems.map((item) => (
+                <HashLink
+                  key={item.label}
+                  to={item.href}
+                  scroll={(el) => el.scrollIntoView({ behavior: "smooth" })}
+                >
+                  <motion.div
+                    variants={linkVariants}
+                    onClick={() => {
+                      setActiveLink(item.label);
+                      setIsOpen(false);
+                    }}
+                    className={`flex items-center justify-between p-3 rounded-lg transition-all duration-300 ${
+                      activeLink === item.label
+                        ? "bg-green-50 text-green-700"
+                        : "hover:bg-green-50/50 hover:text-green-600"
+                    }`}
                   >
+                    <span className="text-lg font-medium">{item.label}</span>
                     <motion.div
-                      variants={linkVariants}
-                      onClick={() => {
-                        setActiveLink(item.label);
-                        setIsOpen(false);
-                      }}
-                      className={`flex items-center space-x-3 p-3 rounded-md transition-colors ${
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      className={`h-2 w-2 rounded-full ${
                         activeLink === item.label
-                          ? "bg-blue-50 text-blue-600"
-                          : "hover:bg-gray-100"
+                          ? "bg-green-600"
+                          : "bg-transparent"
                       }`}
-                    >
-                      <span className="text-lg">{item.label}</span>
-                    </motion.div>
-                  </HashLink>
-                );
-              })}
+                    />
+                  </motion.div>
+                </HashLink>
+              ))}
 
               {/* Mobile Shop Button */}
               <motion.button
                 variants={linkVariants}
-                whileHover="hover"
-                className="flex items-center bg-primary text-white px-4 py-2 rounded-full space-x-2 hover:bg-green-800 transition justify-center mx-auto"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full flex items-center justify-center bg-green-600 text-white px-4 py-3 rounded-full space-x-2 hover:bg-green-700 transition"
               >
-                <ShoppingCart size={20} /> {/* ShoppingCart Icon */}
-                <span className="text-sm font-medium">Shop</span>
+                <ShoppingCart size={20} />
+                <span className="text-sm font-medium">Shop Now</span>
               </motion.button>
             </motion.div>
           </motion.div>

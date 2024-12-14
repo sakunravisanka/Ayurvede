@@ -32,7 +32,7 @@ const ProductQuickOverview = () => {
       "Third-Party Laboratory Tested",
       "Vegan & Vegetarian Compliant",
       "cGMP (Current Good Manufacturing Practice) Certified",
-      "Made in USA",
+      "Made in Sri Lanka",
     ],
     dosage: [
       "Recommended Dosage: 2 Vegetarian Capsules Daily",

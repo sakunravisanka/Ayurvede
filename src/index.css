@@ -1,3 +1,85 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Playfair Display - Regular */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 400; /* Regular weight */
+    src: url("/fonts/PlayfairDisplay-Regular.ttf") format("woff2");
+  }
+
+  /* Playfair Display - Medium */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 500; /* Medium weight */
+    src: url("/fonts/PlayfairDisplay-Medium.ttf") format("woff2");
+  }
+
+  /* Playfair Display - SemiBold */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 600; /* SemiBold weight */
+    src: url("/fonts/PlayfairDisplay-SemiBold.ttf") format("woff2");
+  }
+
+  /* Playfair Display - Bold */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 700; /* Bold weight */
+    src: url("/fonts/PlayfairDisplay-Bold.ttf") format("woff2");
+  }
+
+  /* Playfair Display - ExtraBold */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 800; /* ExtraBold weight */
+    src: url("/fonts/PlayfairDisplay-ExtraBold.ttf") format("woff2");
+  }
+
+  /* Playfair Display - Black */
+  @font-face {
+    font-family: "PlayfairDisplay";
+    font-style: normal;
+    font-weight: 900; /* Black weight */
+    src: url("/fonts/PlayfairDisplay-Black.ttf") format("woff2");
+  }
+}
+
+body {
+  font-family: "PlayfairDisplay", serif;
+}
+
+.font-regular {
+  font-family: "PlayfairDisplay", serif;
+  font-size: 20px;
+  font-weight: 400; /* Regular */
+}
+
+.font-medium {
+  font-family: "PlayfairDisplay", serif;
+  font-size: 20px;
+  font-weight: 500; /* Medium */
+}
+
+.font-bold {
+  font-family: "PlayfairDisplay", serif;
+  font-weight: 700; /* Bold */
+}
+
+.font-semi-bold {
+  font-family: "PlayfairDisplay", serif;
+  font-weight: 600; /* SemiBold */
+}
+
+.font-sub-header {
+  font-family: "PlayfairDisplay", serif;
+  font-size: 38px;
+  font-weight: 600; /* Optional custom weight */
+}
