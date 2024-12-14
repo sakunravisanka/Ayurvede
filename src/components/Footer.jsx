@@ -2,6 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import Logo from "../assets/images/Logo.png";
 import FooterBg from "../assets/images/footernew.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   // Framer Motion animations
@@ -13,7 +19,7 @@ const Footer = () => {
       transition: {
         duration: 0.5,
         ease: "easeOut",
-        staggerChildren: 0.2, // Add stagger effect for child elements
+        staggerChildren: 0.2,
       },
     },
   };
@@ -40,24 +46,24 @@ const Footer = () => {
   const socialLinks = [
     {
       href: "https://www.facebook.com",
-      icon: "facebook-f",
+      icon: faFacebookF,
       color: "text-blue-600 hover:text-blue-800",
     },
     {
       href: "https://twitter.com",
-      icon: "twitter",
+      icon: faTwitter,
       color: "text-sky-500 hover:text-sky-700",
     },
     {
       href: "https://www.instagram.com",
-      icon: "instagram",
+      icon: faInstagram,
       color: "text-pink-600 hover:text-pink-800",
     },
   ];
 
   return (
     <motion.footer
-      className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 w-full min-h-screen"
+      className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 w-full min-h-full"
       style={{
         backgroundImage: `url(${FooterBg})`,
         backgroundSize: "cover",
@@ -99,22 +105,25 @@ const Footer = () => {
             <p className="text-gray-600 mb-4">Sundays 12:00 noon to 8:00 pm</p>
           </div>
 
-          {/* Social Links Section */}
-          <div className="flex space-x-6 justify-start items-center text-2xl">
-            {socialLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${link.color} transition-colors duration-300`}
-                variants={socialIconVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                <i className={`fab fa-${link.icon}`}></i>
-              </motion.a>
-            ))}
+          {/* Social Icons Section */}
+          <div className="mt-6">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Socials</h3>
+            <div className="flex space-x-6 justify-start items-center text-2xl">
+              {socialLinks.map((link, index) => (
+                <motion.a
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${link.color} transition-colors duration-300`}
+                  variants={socialIconVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <FontAwesomeIcon icon={link.icon} />
+                </motion.a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
