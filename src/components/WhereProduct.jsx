@@ -172,7 +172,7 @@ const WhereProduct = () => {
 
   return (
     <motion.div
-      className="relative py-12 min-h-screen flex items-center overflow-hidden"
+      className="relative py-12 h-full flex items-center overflow-hidden"
       style={{
         backgroundImage: `url(${LeftImage})`,
         backgroundSize: "cover",
@@ -183,7 +183,10 @@ const WhereProduct = () => {
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+      <div
+        id="service"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10"
+      >
         {/* Left Side - Placeholder or Empty for Mobile Layout */}
         <div className="hidden md:block"></div>
 

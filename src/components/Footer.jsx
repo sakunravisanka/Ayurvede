@@ -1,13 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Logo from "../assets/images/Logo.png";
-import FooterBg from "../assets/images/footernew.png";
+import FooterBg from "../assets/images/footer5.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faTwitter,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   // Framer Motion animations
@@ -50,14 +46,9 @@ const Footer = () => {
       color: "text-blue-600 hover:text-blue-800",
     },
     {
-      href: "https://twitter.com",
-      icon: faTwitter,
-      color: "text-sky-500 hover:text-sky-700",
-    },
-    {
-      href: "https://www.instagram.com",
-      icon: faInstagram,
-      color: "text-pink-600 hover:text-pink-800",
+      href: "https://www.linkedin.com",
+      icon: faLinkedinIn,
+      color: "text-blue-700 hover:text-blue-900",
     },
   ];
 
@@ -83,14 +74,14 @@ const Footer = () => {
         {/* Main Branch Section */}
         <div className="flex flex-col items-start ml-4">
           <h3 className="text-2xl font-bold mb-4 text-gray-800">Main Branch</h3>
-          <p className="text-gray-600">
+          <p className="text-black">
             Viyathpura, Pannipitiya,
             <br />
             Colombo, Sri Lanka
           </p>
           <br />
-          <p className="text-gray-600 mb-2">Call: +94 76 686 1659</p>
-          <p className="text-gray-600">Email: contact@ceylonmystique.com</p>
+          <p className="text-black mb-2">Call: +94 76 686 1659</p>
+          <p className="text-black">Email: contact@ceylonmystique.com</p>
         </div>
 
         {/* Opening Hours Section */}
@@ -99,10 +90,10 @@ const Footer = () => {
             <h3 className="text-2xl font-bold mb-4 text-gray-800">
               Opening Hours
             </h3>
-            <p className="text-gray-600 mb-2">
+            <p className="text-black mb-2">
               Monday to Saturday 8:00 am to 8:00 pm
             </p>
-            <p className="text-gray-600 mb-4">Sundays 12:00 noon to 8:00 pm</p>
+            <p className="text-black mb-4">Sundays 12:00 noon to 8:00 pm</p>
           </div>
 
           {/* Social Icons Section */}

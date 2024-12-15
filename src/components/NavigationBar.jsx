@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,6 +9,16 @@ const NavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [searchQuery, setSearchQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const menuItems = [
     { label: "Home", href: "/#home", route: "/" },
@@ -19,10 +29,7 @@ const NavigationBar = () => {
   ];
 
   const containerVariants = {
-    hidden: {
-      opacity: 0,
-      y: -30,
-    },
+    hidden: { opacity: 0, y: -30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -37,56 +44,35 @@ const NavigationBar = () => {
   };
 
   const linkVariants = {
-    hidden: {
-      opacity: 0,
-      x: -20,
-      scale: 0.9,
-    },
+    hidden: { opacity: 0, x: -20, scale: 0.9 },
     visible: {
       opacity: 1,
       x: 0,
       scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 20,
-      },
+      transition: { type: "spring", stiffness: 300, damping: 20 },
     },
     hover: {
       scale: 1.05,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-      },
+      transition: { type: "spring", stiffness: 300 },
     },
-    tap: {
-      scale: 0.95,
-    },
+    tap: { scale: 0.95 },
   };
 
   const mobileMenuVariants = {
     hidden: {
       opacity: 0,
       x: "100%",
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-      },
+      transition: { duration: 0.4, ease: "easeInOut" },
     },
     visible: {
       opacity: 1,
       x: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-      },
+      transition: { type: "spring", stiffness: 300, damping: 30 },
     },
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Implement search functionality
     console.log("Searching for:", searchQuery);
   };
 
@@ -95,7 +81,11 @@ const NavigationBar = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="fixed h-20 top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg shadow-md"
+      className={`fixed h-20 top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg shadow-md ${
+        scrolled
+          ? "bg-white/80 backdrop-blur-md shadow-md"
+          : "bg-white/95 backdrop-blur-sm shadow-sm"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center relative">
         {/* Logo */}
@@ -107,7 +97,9 @@ const NavigationBar = () => {
             <img
               src={logo}
               alt="Logo"
-              className="h-16 filter brightness-90 contrast-125 saturate-150 hue-rotate-15"
+              className={`h-16 filter brightness-90 contrast-125 saturate-150 hue-rotate-15 transform transition-all duration-300 ${
+                scrolled ? "h-12 md:h-14" : "h-16 md:h-18"
+              }`}
             />
           </motion.div>
         </Link>
@@ -160,10 +152,7 @@ const NavigationBar = () => {
         >
           <motion.div
             className="relative flex items-center"
-            whileFocus={{
-              scale: 1.02,
-              transition: { duration: 0.2 },
-            }}
+            whileFocus={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <input
               type="text"
@@ -201,7 +190,7 @@ const NavigationBar = () => {
             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
           }}
           whileTap={{ scale: 0.95 }}
-          className="hidden lg:flex items-center absolute right-4 top-1/2 -translate-y-1/2 bg-green-600 text-white px-4 py-2 rounded-full space-x-2 hover:bg-green-700 transition"
+          className="hidden lg:flex items-center absolute right-10 top-1/2 -translate-y-1/2 bg-primary text-white px-4 py-2 rounded-full space-x-2 hover:bg-green-800 transition"
         >
           <ShoppingCart size={20} />
           <span className="text-sm font-medium">Shop</span>
@@ -237,10 +226,7 @@ const NavigationBar = () => {
             >
               <motion.div
                 className="relative flex items-center bg-gray-100 rounded-full px-4 py-2"
-                whileFocus={{
-                  scale: 1.02,
-                  transition: { duration: 0.2 },
-                }}
+                whileFocus={{ scale: 1.02, transition: { duration: 0.2 } }}
               >
                 <Search size={20} className="text-gray-500 mr-2" />
                 <input
@@ -295,7 +281,7 @@ const NavigationBar = () => {
                   boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full flex items-center justify-center bg-green-600 text-white px-4 py-3 rounded-full space-x-2 hover:bg-green-700 transition"
+                className="w-full flex items-center justify-center bg-primary text-white px-4 py-3 rounded-full space-x-2 hover:bg-green-900 transition"
               >
                 <ShoppingCart size={20} />
                 <span className="text-sm font-medium">Shop Now</span>

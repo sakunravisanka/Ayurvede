@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import OrganicProductsImage from "../assets/images/productsection/1.png";
 import HerbalSupplementsImage from "../assets/images/productsection/2.jpg";
 import LifestyleWellnessImage from "../assets/images/productsection/3.png";
-import BackgroundImage from "../assets/images/productsection/backg.png"; // Your background image
+import BackgroundImage from "../assets/images/productsection.png"; // Your background image
 
 const ProductSection = () => {
   // Container animation for staggered children

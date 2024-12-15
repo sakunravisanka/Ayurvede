@@ -87,7 +87,7 @@ const Hero = () => {
           <motion.img
             src={productImage}
             alt="Product"
-            className="w-52 h-52 md:w-80 md:h-80 mt-10 md:mt-0 object-cover rounded-full" // Adjusted size for mobile
+            className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 mt-10 md:mt-0 object-cover rounded-full"
             animate={{
               rotate: 360, // Rotate 360 degrees
             }}
